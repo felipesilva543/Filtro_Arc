@@ -14,6 +14,20 @@ int tempoEs(int *valor){
 	}
 }
 
+void lerArquivo(int aux[]){
+	int cont = 0;
+	FILE *arq;
+	arq = fopen("exemplo.txt", "r");
+
+	if(arq == NULL){
+			printf("Erro ao abrir o arquivo!!!");
+			return;
+	}else {
+			printf("Pegando valores(DEBUG)\n");
+			while(fscanf(arq, "%d,", &aux[cont++]) != EOF);
+		fclose(arq);
+	}
+}
 
 int filtro(int vEntr[], int vFil[], int vSai[], int tamSai, int tamFil){
 	printf("Chegou na função FILTRO!!(DEBUG)");
@@ -31,7 +45,6 @@ int main () {
 	int tam = 0, tamFil = 0;
 
 	int i, j, soma = 0, aux;
-	int cont = 0;
 	long int inicio, fim;
 
 	printf("Digite o tamanho da Entrada: \n");
@@ -48,17 +61,7 @@ int main () {
     	vSai[i] = 0;
 	}
 
-	FILE *arq;
-	arq = fopen("exemplo.txt", "r");
-
-	if(arq == NULL){
-    	printf("Erro ao abrir o arquivo!!!");
-    	return(0);
-	}else {
-    	printf("Pegando valores(DEBUG)\n");
-		while(fscanf(arq, "%d,", &vEntr[cont++]) != EOF);
-		fclose(arq);
-	}
+	lerArquivo(vEntr);
 
 	printf("\n\nVetor de Entrada(DEBUG)!!\n");
 
@@ -76,6 +79,15 @@ int main () {
 	inicio = clock();
 	filtro(vEntr, vFil, vSai, tamSai, tamFil);
 	fim = clock();
+
+	FILE * resultado;
+	resultado = fopen("result.txt", "w");
+	for (i = 0; i < tamSai; i++) {
+		fprintf(resultado, "%d\n", vSai[i]);
+	}
+	fclose(resultado);
+
+
 
     printf("\n\n");
     printf("Chegou em imprimir VETOR FINAL (DEBUG)!!!\n");
