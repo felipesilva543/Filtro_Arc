@@ -19,11 +19,11 @@ void lerArquivo(int aux[]){
 	FILE *arq;
 	arq = fopen("entrada.txt", "r");
 	if (arq == NULL) {
-			printf("Erro ao abrir o arquivo!!!");
-			return;
+		printf("Erro ao abrir o arquivo!!!");
+		return;
 	}else {
-			while (fscanf (arq, "%d ", &aux[cont++]) != EOF);
-		fclose (arq);
+		while (fscanf (arq, "%d ", &aux[cont++]) != EOF);
+			fclose (arq);
 	}
 }
 
@@ -46,8 +46,6 @@ int main () {
 
 	lerArquivo(vEntr);
 
-	for (i = 0; i < tamSai; i++) {
-	}
 	vSai[i] = 0;
 	printf("Digite os Valores do Filtro: \n");
 	for (i = 0; i < tamFil; i++) {
@@ -56,7 +54,7 @@ int main () {
 
 	inicio = (double) clock();
 	for (i = 0; i < tamSai; i++) {
-			vSai[i] = CMAIN (vEntr+i, vFil, tamFil);
+		vSai[i] = CMAIN (vEntr+i, vFil, tamFil);
 	}
 	fim = (double) clock();
 
