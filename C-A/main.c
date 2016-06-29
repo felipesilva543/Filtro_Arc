@@ -5,6 +5,7 @@
 
 struct  pollfd mypoll = { STDIN_FILENO, POLLIN|POLLPRI };
 
+//Função para verificar se o Usuário digitou!
 int tempoEs(int *valor){
 	if( poll(&mypoll, 1, 3000)) {
 		scanf("%d", valor);
@@ -14,6 +15,7 @@ int tempoEs(int *valor){
 	}
 }
 
+//Ler Arquivo
 void lerArquivo(int aux[]){
 	int cont = 0;
 	FILE *arq;
@@ -22,16 +24,18 @@ void lerArquivo(int aux[]){
 		printf("Erro ao abrir o arquivo!!!");
 		return;
 	}else {
-		while (fscanf (arq, "%d ", &aux[cont++]) != EOF);
+		while (fscanf (arq, "%d,", &aux[cont++]) != EOF);
 			fclose (arq);
 	}
 }
 
+//Função em Assembly
 int CMAIN (int *vEntr, int *vFil, int tamFil);
 
 int main () {
+	//Variáveis de Controle
 	int tam = 0, tamFil = 0;
-	int i, j;
+	int i;
 	int inicio, fim;
 
 	printf("Digite o tamanho da Entrada: \n");
@@ -39,14 +43,20 @@ int main () {
 	printf("Digite o tamanho do Filtro: \n");
 	tempoEs(&tamFil);
 
-
+	//Variável de controle Tamanho do vetor de Saída
 	int tamSai = (tam-tamFil+1);
-	int vSai[tamSai];
-	int vEntr[tam], vFil[tamFil];
 
+	//Vetores de Entrada, Filtro e Saída
+	int vSai[tamSai], vEntr[tam], vFil[tamFil];
+
+	//Lendo entradas do Arquivo
 	lerArquivo(vEntr);
 
-	vSai[i] = 0;
+	//Zerando vetor de Saída
+	for (i = 0; i < tamSai; i++) {
+		vSai[i] = 0;
+	}
+
 	printf("Digite os Valores do Filtro: \n");
 	for (i = 0; i < tamFil; i++) {
 		tempoEs(&vFil[i]);
@@ -58,13 +68,15 @@ int main () {
 	}
 	fim = (double) clock();
 
+	//Escrevendo Arquivo de Resultado
 	FILE * resultado;
 	resultado = fopen("result.txt", "w");
 	for (i = 0; i < tamSai; i++) {
-		fprintf(resultado, "%d\n", vSai[i]);
+		fprintf(resultado, "| %d ", vSai[i]);
 	}
 	fclose(resultado);
 
+	//Printando vetor de Saída
 	printf("Vetor de Saída\n| ");
 	for (i = 0; i < tamSai; i++) {
 		printf("%d | ", vSai[i]);

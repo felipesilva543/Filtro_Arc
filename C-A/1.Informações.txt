@@ -1,0 +1,11 @@
+
+
+1. Os numeros no arquivos de entrada tem que estar separados por virgulas;
+2. Arquivo com as entradas tem que estar na mesma pasta dos códigos, e conter o nome de "entrada.txt";
+3. Ao executar, ter cuidado com a sequencia das informações inseridas. ^^
+
+
+ALUNOS:
+Francisco Felipe da Silva M: 374850
+Iury Queiros Soáres M: 374852
+
