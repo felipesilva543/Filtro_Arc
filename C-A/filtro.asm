@@ -1,25 +1,63 @@
 ;%include "io64.inc"
 
-section .data
+global CMAIN
 section .bss
-    aux: resb 8
+	    
+    vSai: resb 8
+    vFil: resb 8
+    vEnt: resb 8 
+    
+    tSai: resb 4
+    tFil: resb 4
+    tEnt: resb 4
 section .text
 
-global CMAIN
-
 CMAIN:
-    MOV rcx, rdx
-    MOV rbx, 0
-    MOV R9, 0
+
+    mov [vFil], rdi
+    mov [vSai], rdx
+    mov [vEnt], rsi
+    mov [tFil], ecx
+    mov [tSai], r9d
+    mov [tEnt], r8d
+    mov rcx, 0
+    mov rdx, 0	
+    mov ecx, [tSai]
+	
+for1:
+
+    mov rbx, [vSai]
+    mov rax, 0	
+    mov [rbx+rdx], rax	
+    push rcx		
+    push rdx		
+    mov rcx, 0
+    mov rbx, rdx		
+    mov ecx, [tFil]	
+
+    for2:
     
-	for_2:
-		MOV rax, 0
-		MOV rdx, 0 
-		MOV rax, [RDI + R9]
-		MOV rdx, [RSI + R9] 
-		MUL rdx
-		ADD rbx, rax
-		ADD R9, 4
-		LOOP for_2
-		MOV rax,rbx
-	RET
+        push rax
+        push rbx	
+        push rcx
+        push rdx
+        mov rcx, [vFil]
+        mov rcx, [rcx+rax]
+        mov rax, [vEnt]
+        mov rax, [rax+rbx]
+        mul rcx
+        pop rdx
+        mov rcx, [vSai]
+        add [rcx+rdx], rax
+        pop rcx
+        pop rbx
+        pop rax
+        add rax, 4
+        add rbx, 4
+    loop for2
+        pop rdx
+        pop rcx
+        add rdx, 4
+loop for1    
+        
+    ret

@@ -30,7 +30,7 @@ void lerArquivo(int aux[]){
 }
 
 //Função em Assembly
-int CMAIN (int *vEntr, int *vFil, int tamFil);
+void CMAIN (int *vFil, int *vEntr, int *vSai, int tamFil, int tam, int tamSai);
 
 int main () {
 	//Variáveis de Controle
@@ -63,9 +63,7 @@ int main () {
   }
 
 	inicio = (double) clock();
-	for (i = 0; i < tamSai; i++) {
-		vSai[i] = CMAIN (vEntr+i, vFil, tamFil);
-	}
+	CMAIN (vFil, vEntr, vSai, tamFil, tam, tamSai);
 	fim = (double) clock();
 
 	//Escrevendo Arquivo de Resultado
@@ -74,6 +72,8 @@ int main () {
 	for (i = 0; i < tamSai; i++) {
 		fprintf(resultado, "| %d ", vSai[i]);
 	}
+		fprintf(resultado, "|");
+		fprintf(resultado,"\nTempo de execução do filtro: %.10lfs.\n", (fim-inicio)/(double)CLOCKS_PER_SEC);
 	fclose(resultado);
 
 	//Printando vetor de Saída
